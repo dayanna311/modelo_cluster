@@ -79,7 +79,7 @@ class UMAP_DBSCAN_Clustering:
             print(f" Clusters detectados : {n_clusters}")
             print(f" Outliers            : {n_noise} ({n_noise/len(labels)*100:.1f}%)")
 
-    def save(self, path="models\umap_dbscan_pipeline.pkl"):
+    def save(self, path="models/umap_dbscan_pipeline.pkl"):        
         """Guardar todo el pipeline"""
         joblib.dump(self, path)
         print(f"Modelo guardado en: {path}")
