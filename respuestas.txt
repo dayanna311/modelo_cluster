@@ -1,0 +1,15 @@
+Forwarding_Ngrok = https://hadlee-accoladed-milan.ngrok-free.dev
+
+1. Ventajas de usar Ngrok para exponer rápido una API
+
+Ngrok es una herramienta que crea una URL pública segura para exponer un servidor local a internet de forma instantánea, sin necesidad de configurar servidores ni realizar despliegues en la nube. Esto evita configurar infraestructura (DNS, puertos, firewall, balanceadores) y facilita pruebas end-to-end con herramientas como Swagger UI y Postman, además de integraciones externas como webhooks. 
+Algunas ventajas clave incluyen su simplicidad y rapidez de configuración, la posibilidad de compartir una URL funcional con otras personas para realizar pruebas, y su inspector web integrado que permite monitorear en tiempo real las solicitudes y respuestas de la API
+
+2. ¿Cómo mejorarías la seguridad de la API antes de desplegarla en producción?
+
+Antes de llevar la API a un entorno de producción, aplicaría una estrategia de seguridad por capas que cubra los aspectos más críticos:
+En primer lugar, implementaría autenticación mediante tokens OAuth2 o API keys, combinada con control de acceso por roles, de modo que cada endpoint solo sea accesible por los usuarios que realmente lo necesitan.
+En cuanto al transporte de datos, configuraría HTTPS con certificados TLS válidos para garantizar que toda la información viaje cifrada entre el cliente y el servidor, evitando que pueda ser interceptada.
+Para la gestión de credenciales, almacenaría todos los tokens y claves sensibles en variables de entorno o un gestor de secretos, nunca escritos directamente en el código o el notebook, ya que esto representa un riesgo de exposición.
+También añadiría validación estricta de los datos de entrada con Pydantic, para rechazar payloads malformados o inesperados antes de que lleguen al modelo. Complementaría esto con rate limiting para proteger la API contra abusos o ataques de denegación de servicio.
+Finalmente, restringiría las políticas de CORS a orígenes específicos, implementaría logs estructurados para monitorear la actividad sin exponer datos sensibles, y desplegaría la aplicación detrás de un API Gateway o reverse proxy que centralice los controles de seguridad.

@@ -1,11 +1,20 @@
 from fastapi import FastAPI
 import joblib
 import numpy as np
+import sys
 from pydantic import BaseModel
+from pathlib import Path
 
-from src.preprocessing import FifaPreprocessor
-from src.clustering import UMAP_DBSCAN_Clustering
 
+# ROOT_DIR apunta a la raíz del proyecto (modelo_cluster)
+ROOT_DIR = Path(__file__).parent.parent.resolve()
+
+# Agregar src al sys.path para poder importar tus scripts
+sys.path.insert(0, str(ROOT_DIR / "src"))
+
+
+import preprocessing
+import clustering
 
 app = FastAPI(title="FIFA Clustering API")
 
@@ -19,11 +28,13 @@ def load_models():
     global preprocessor
     global clustering_model
 
-    preprocessor = joblib.load("models/fifa_preprocessor.pkl")
-    clustering_model = joblib.load("models/clustering_pipeline.pkl")
+    # Cargar modelos
+
+    MODEL_DIR = ROOT_DIR / "models"
+    preprocessor = joblib.load(MODEL_DIR / "fifa_preprocessor.pkl")
+    clustering_model = joblib.load(MODEL_DIR / "clustering_pipeline.pkl")
 
     print("Modelos cargados")
-
 
 # -------------------------
 # schema entrada
